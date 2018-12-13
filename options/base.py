@@ -1,4 +1,4 @@
-class Option:
+class OptionOld:
     def __init__(self, strike, premium, type):
         self._strike = strike
         self._premium = premium
