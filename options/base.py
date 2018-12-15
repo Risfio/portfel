@@ -71,3 +71,14 @@ class OptionOld:
         elif self._type == 'SELL_PUT':
             result = self._sell_put_balance(ba)
         return result
+
+
+class Option:
+    def __init__(self, base_active, strike, settlement, month, year, *args, **kwargs):
+        self._base_active = base_active
+        self._strike = strike
+        self._settlement = settlement
+        self._month = month
+        self._year = year
+        return self.__init__(self, *args)
+
