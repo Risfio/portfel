@@ -80,5 +80,5 @@ class Option:
         self._settlement = settlement
         self._month = month
         self._year = year
-        return self.__init__(self, *args)
+        return super(Option, self).__init__(*args, **kwargs)
 
