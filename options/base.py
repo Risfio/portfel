@@ -74,11 +74,6 @@ class OptionOld:
 
 
 class Option:
-    def __init__(self, base_active, strike, settlement, month, year, *args, **kwargs):
-        self._base_active = base_active
-        self._strike = strike
-        self._settlement = settlement
-        self._month = month
-        self._year = year
-        return super(Option, self).__init__(*args, **kwargs)
+    def __init__(self, base_active="", strike=0, settlement="", month=0, year=0, *args, **kwargs):
+        super(Option, self).__init__()
 
