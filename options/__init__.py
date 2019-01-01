@@ -10,12 +10,12 @@ def _fromstring(input_string):
     temp = ""
     result = []
 
+    # Базовый актив. 2 буквы
     ba_reg = re.compile(r'^\w{2,2}')
     result.append(ba_reg.findall(input_string)[0])
     temp = ba_reg.subn("", input_string, 1)[0]
 
     # Get strike price and deals type(marginal or premial)
-
     strike_reg = re.compile(r'^\d{2,}')
     result.append(strike_reg.findall(temp)[0])
     temp = strike_reg.subn("", temp, 1)[0]
@@ -26,8 +26,9 @@ def _fromstring(input_string):
     result.append(settlement_reg.findall(temp)[0])
     temp = settlement_reg.subn('', temp, 1)[0]
 
-    # Get month
-
+    # Get month and option type(CALL or PUT)
+    # От A до L включительно - для опционов CALL
+    # Соответственно от M до X - для опционов PUT
     month_reg = re.compile(r'^[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X]{1,1}')
     result.append(month_reg.findall(temp)[0])
     temp = month_reg.subn('', temp, 1)[0]

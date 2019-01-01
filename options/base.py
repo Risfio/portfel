@@ -1,3 +1,5 @@
+import re
+
 class OptionOld:
     def __init__(self, strike, premium, type):
         self._strike = strike
@@ -74,6 +76,23 @@ class OptionOld:
 
 
 class Option:
-    def __init__(self, base_active="", strike=0, settlement="", month=0, year=0, *args, **kwargs):
+    @property
+    def base_active(self):
+        return self._base_active
+
+    @base_active.setter
+    def base_active(self, value):
+        # Verification here
+        # to be continue... [a-zA-Z]{2,2}
+        self._base_active = value
+
+    def __init__(self, *args, **kwargs):
+
+        self.base_active, self.strike, self.settlement, self.month, self.year = args
+
+        for k in kwargs.keys():
+            if k in self.__dict__:
+                self.__setattr__(k, kwargs[k])
+
         super(Option, self).__init__()
 
