@@ -1,5 +1,9 @@
 import re
 
+OPTION_TYPE_CALL = 1
+OPTION_TYPE_PUT = 0
+
+
 class OptionOld:
     def __init__(self, strike, premium, type):
         self._strike = strike
@@ -76,6 +80,7 @@ class OptionOld:
 
 
 class Option:
+
     @property
     def base_active(self):
         return self._base_active
@@ -83,8 +88,64 @@ class Option:
     @base_active.setter
     def base_active(self, value):
         # Verification here
-        # to be continue... [a-zA-Z]{2,2}
-        self._base_active = value
+        pat = re.compile(r"[a-zA-Z]{2,2}")
+        # If verify value - set base_active equal to value
+        if pat.match(value) is None:
+            self._base_active = None
+        elif pat.match(value) is not None:
+            self._base_active = value
+
+    @property
+    def strike(self):
+        return self._strike
+
+    @strike.setter
+    def strike(self, value):
+        pat = re.compile(r'\d{2,}')
+        if pat.match(value) is None:
+            self._strike = None
+        elif pat.match(value) is not None:
+            self._strike = value
+
+    @property
+    def settlement(self):
+        return self._settlement
+
+    @settlement.setter
+    def settlement(self, value):
+        pat = re.compile(r'[A|B]{1,1}')
+        if pat.match(value) is None:
+            self._settlement = None
+        elif pat.match(value) is not None:
+            self._settlement = value
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        self._type = value
+
+    @property
+    def month(self):
+        return self._month
+
+    @month.setter
+    def month(self, value):
+        pat = re.compile(value)
+        if pat.match(value) is None:
+            self._month = None
+            self.type = None
+        elif pat.match(value) is not None:
+            call_arg = ["A","B","C","D","E","F","G","H","I","J","K","L"]
+            put_arg = ["M","N","O","P","Q","R","S","T","U","V","W","X"]
+            if value in call_arg:
+                self._month = call_arg.index(value)+1
+                self.type = OPTION_TYPE_CALL
+            elif value in put_arg:
+                self._month = put_arg.index(value)+1
+                self.type = OPTION_TYPE_PUT
 
     def __init__(self, *args, **kwargs):
 
