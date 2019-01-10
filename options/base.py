@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 OPTION_TYPE_CALL = 1
 OPTION_TYPE_PUT = 0
@@ -156,4 +157,31 @@ class Option:
                 self.__setattr__(k, kwargs[k])
 
         super(Option, self).__init__()
+
+    def __str__(self):
+        base_active = "".join(["Базовый актив:", self.base_active])
+        strike = "".join(["Цена исполнения (страйк)", self.strike])
+        # Код опциона
+        # А - американский на фьючерс с уплатой премии
+        # В - американский на фьючерс маржируемый (обычно для мосбиржи)
+        temp = ""
+        if self.settlement == "A":
+            temp = "Американский с уплатой премии"
+        elif self.settlement == "B":
+            temp = "Американский маржируемый"
+        settlement = "".join(["Тип рассчетов :", temp])
+        month = "".join(["Месяц :", ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь",
+                 "ноябрь", "декабрь"][self.month-1]])
+        temp = ""
+        if self.type == OPTION_TYPE_PUT:
+            temp = "PUT"
+        elif self.type == OPTION_TYPE_CALL:
+            temp = "CALL"
+        type = "".join(["Тип опциона:", temp])
+
+        dt = datetime.now().year
+        if self.year == 0:
+            dt = "2020"
+        year = "".join(["Год :", str(dt)])
+        return "\r\n".join([base_active, strike, settlement, month, type, year])
 
