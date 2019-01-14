@@ -1,5 +1,9 @@
 """
 Main portfell class and additional functionality.
+
+TODO:
+Add deals property to MarketBase class.
+It must have method add.
 """
 
 from datetime import datetime
@@ -22,6 +26,7 @@ class MarketBase:
     """
     def __init__(self, name):
         self.name = name
+
 
     def calculate_deals(self):
         """
