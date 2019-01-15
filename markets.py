@@ -6,9 +6,15 @@ TODO:
 1)Add deals property to MarketBase class.
 It must have method add.
 2)Добавить функционал для рассчета баланса
+
 """
 
 from datetime import datetime
+
+from options import Option
+
+DEAL_POSITION_TYPE_SHORT = 0
+DEAL_POSITION_TYPE_LONG = 1
 
 
 class MarketBase:
@@ -30,23 +36,24 @@ class MarketBase:
         self.name = name
 
 
-    def calculate_deals(self):
-        """
-        Собственно просчитываем все сделки в поле deals.
-        Этот метод прописывается для каждого вида рынка отдельно. Для
-        ФОРТСА свой, для ММВБ свой
-        :return: None (что возвращать пока не знаю)
-        """
-        pass
-
-
 class MarketFORTS(MarketBase):
-    def calculate_deals(self):
+
+    def __init__(self, name):
+        self.limitations = LimitationsOnClientAccountsBase()
+        self.positions = PositionsOnClientAccountsBase()
+        return super(MarketFORTS, self).__init__(name)
+
+    def clearing(self):
+        for deal in self.deals:
+            pass
+
+    def expiration(self):
         """
-        Вызов метода для вычисления значений для рынка ФОРТС.
+        Эмулирует результаты экспирации. Т.е. обращает опционы в фьючерсы. Высчитывает ГО.
+        Вообщем полная эмуляция экспирации.
         :return:
         """
-        return None
+        pass
 
 
 class MarketTradeReglaments:
@@ -117,13 +124,30 @@ class BrockerDeal:
         self.dealunit = market_unit
         self.money = money
 
-        if deal_type == "BUY":
-            self.dealtype = 1
-        elif deal_type == "SELL":
-            self.dealtype = 0
+        if deal_type == "BUY" or deal_type == 1:
+            self.dealtype = DEAL_POSITION_TYPE_LONG
+        elif deal_type == "SELL" or deal_type == 0:
+            self.dealtype = DEAL_POSITION_TYPE_SHORT
         else:
-            self.dealtype = deal_type
+            raise Exception("Deal type must SELL, PUT, 1 or 0")
 
         self.dt = dt
         self.et = et
 
+    def execute_deal(self, ba):
+        """
+        Это НЕ ОБЩИЙ МЕТОД ДЛЯ ВСЕХ РЫНКОВ! ЭТО КОНКРЕТНО ДЛЯ ФОРТСА!
+        Проводит операции над родительским объектом - MarketFORTS. Конкретно - изменяет показатели его
+        полей limitations и posittions.
+        :param ba:
+        :return:
+        """
+        if type(self.dealunit) is Option:
+            """
+            Особое отношение к опционам, потому что если ты продаешь и покупаешь опцион с одинаковым страйком,
+            датой и базовым активом - то они не списываются с баланса. А добавляются в короткие и длинные позиции 
+            одновременно. ИЛИ НЕТ!? Надо уточнить!
+            """
+            pass
+        else:
+            pass
