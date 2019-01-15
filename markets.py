@@ -2,8 +2,10 @@
 Main portfell class and additional functionality.
 
 TODO:
-Add deals property to MarketBase class.
+
+1)Add deals property to MarketBase class.
 It must have method add.
+2)Добавить функционал для рассчета баланса
 """
 
 from datetime import datetime
