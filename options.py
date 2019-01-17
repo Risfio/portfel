@@ -152,7 +152,7 @@ class Option:
         if pat.match(value) is None:
             self._strike = None
         elif pat.match(value) is not None:
-            self._strike = value
+            self._strike = int(value)
 
     @property
     def settlement(self):
