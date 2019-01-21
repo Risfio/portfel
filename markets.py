@@ -11,7 +11,7 @@ It must have method add.
 
 from datetime import datetime
 
-from options import Option
+from options import Option, OPTION_TYPE_CALL, OPTION_TYPE_PUT
 
 DEAL_POSITION_TYPE_SHORT = 0
 DEAL_POSITION_TYPE_LONG = 1
@@ -134,20 +134,44 @@ class BrockerDeal:
         self.dt = dt
         self.et = et
 
+    def get_premy(self):
+        # Возвращает сумму премии. Если была покупка опциона - сумма
+        # Иначе - положительная.
+        if self.dealtype == DEAL_POSITION_TYPE_LONG:
+            return self.money * (-1)
+        elif self.dealtype == DEAL_POSITION_TYPE_SHORT:
+            return self.money
+
     def execute_deal(self, ba):
         """
         Это НЕ ОБЩИЙ МЕТОД ДЛЯ ВСЕХ РЫНКОВ! ЭТО КОНКРЕТНО ДЛЯ ФОРТСА!
         Проводит операции над родительским объектом - MarketFORTS. Конкретно - изменяет показатели его
         полей limitations и posittions.
         :param ba:
-        :return:
+        :return: int прибыль или убыток в результате экспирации опциона
         """
+        result = 0
         if type(self.dealunit) is Option:
             """
             Особое отношение к опционам, потому что если ты продаешь и покупаешь опцион с одинаковым страйком,
             датой и базовым активом - то они не списываются с баланса. А добавляются в короткие и длинные позиции 
             одновременно. ИЛИ НЕТ!? Надо уточнить!
             """
-            pass
+            opt = self.dealunit
+            # Если опцион колл в деньгах
+            if opt.type == OPTION_TYPE_CALL and opt.strike <= ba:
+                result = ba - opt.strike + self.get_premy()
+            # Опцион колл вне денег
+            elif opt.type == OPTION_TYPE_CALL and opt.strike > ba:
+                result = self.get_premy()
+            # Опцион пут в деньгах
+            elif opt.type == OPTION_TYPE_PUT and opt.strike >= ba:
+                result = opt.strike - ba + self.get_premy()
+            # Опцион пут вне денег
+            else :
+                result = self.get_premy()
         else:
             pass
+
+        return result
+
