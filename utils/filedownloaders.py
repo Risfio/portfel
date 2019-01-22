@@ -4,10 +4,10 @@ Usefull functions for download from data from files.
 
 """
 
-from pandas import DataFrame as pd
+import pandas as pd
 
 
-def Si_from_CSV(filepath, sep=";"):
+def Si_from_CSV(filepath):
     """
     Получаем CSV с данными по фьючерсу на бакс:
         идем на mfd.ru
@@ -27,5 +27,5 @@ def Si_from_CSV(filepath, sep=";"):
     :param sep: разделитель для значений должен быть " ; "
     :return: возвращает DataFrame с загруженными данными для фьючерса Si
     """
-    return pd.read_csv(filepath)
+    return pd.read_csv(filepath, sep=";")
 
