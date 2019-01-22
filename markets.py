@@ -114,6 +114,11 @@ class BrockerDeal:
     сделки. Класс сдесь нужен, только, для того, чтоб контролировать процесс создания и
     небольшого удобства в визуализации ( типа указывать BUY/SELL при использовании.
 
+    Usage:
+    >>> s = 'Si66500BC0'
+    >>> opt = fromstring(s)
+    >>> bd = BrockerDeal([Option exemplary], 1000, DEAL_POSITION_TYPE_LONG, et=True)
+
     :param dealunit : exemplary of classes like Option, Future
     :param money : allways POSITIVE number - sum of transaction
     :param dealtype : int number 0 or 1 (sell or buy) or for visualize use "BUY" and "SELL"
