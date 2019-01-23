@@ -11,7 +11,7 @@ It must have method add.
 
 from datetime import datetime
 
-from options import Option, OPTION_TYPE_CALL, OPTION_TYPE_PUT
+from .options import Option, OPTION_TYPE_CALL, OPTION_TYPE_PUT
 
 DEAL_POSITION_TYPE_SHORT = 0
 DEAL_POSITION_TYPE_LONG = 1
