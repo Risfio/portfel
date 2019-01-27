@@ -17,7 +17,10 @@ if __name__ == "__main__":
     data_range = []
     period_in = 5
 
-    loader = FileLoader("SiH9")
-    df = si_prices_volumes(loader.filepath)
-    print(df[['<DATE>', '<HIGH>']])
+    #loader = FileLoader("SiH9")
+    #df = si_prices_volumes(loader.filepath)
+    #print(df[['<DATE>', '<HIGH>']])
 
+    s = "Si65000BC0"
+    opt = fromstring(s)
+    print(opt)
