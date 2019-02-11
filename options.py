@@ -167,11 +167,11 @@ class Option:
             self._settlement = value
 
     @property
-    def type(self):
+    def otype(self):
         return self._type
 
-    @type.setter
-    def type(self, value):
+    @otype.setter
+    def otype(self, value):
         self._type = value
 
     @property
@@ -183,16 +183,16 @@ class Option:
         pat = re.compile(value)
         if pat.match(value) is None:
             self._month = None
-            self.type = None
+            self.otype = None
         elif pat.match(value) is not None:
             call_arg = ["A","B","C","D","E","F","G","H","I","J","K","L"]
             put_arg = ["M","N","O","P","Q","R","S","T","U","V","W","X"]
             if value in call_arg:
                 self._month = call_arg.index(value)+1
-                self.type = OPTION_TYPE_CALL
+                self.otype = OPTION_TYPE_CALL
             elif value in put_arg:
                 self._month = put_arg.index(value)+1
-                self.type = OPTION_TYPE_PUT
+                self.otype = OPTION_TYPE_PUT
 
     def __init__(self, *args, **kwargs):
 
@@ -219,15 +219,29 @@ class Option:
         month = "".join(["Месяц :", ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь",
                  "ноябрь", "декабрь"][self.month-1]])
         temp = ""
-        if self.type == OPTION_TYPE_PUT:
+        if self.otype == OPTION_TYPE_PUT:
             temp = "PUT"
-        elif self.type == OPTION_TYPE_CALL:
+        elif self.otype == OPTION_TYPE_CALL:
             temp = "CALL"
-        type = "".join(["Тип опциона:", temp])
+        otype = "".join(["Тип опциона:", temp])
 
         dt = datetime.now().year
         if self.year == 0:
             dt = "2020"
         year = "".join(["Год :", str(dt)])
-        return "\r\n".join([base_active, strike, settlement, month, type, year])
+        return "\r\n".join([base_active, strike, settlement, month, otype, year])
 
+    def _inmoney(self, ba):
+        result = False
+        if self.otype == OPTION_TYPE_PUT:
+            if self.strike > ba:
+                result = True
+        elif self.otype == OPTION_TYPE_CALL:
+            if self.strike < ba:
+                result = True
+        return result
+
+    def calculate(self, ba):
+        result = 0
+        # to be continue...
+        return result

@@ -156,27 +156,6 @@ class BrockerDeal:
         :return: int прибыль или убыток в результате экспирации опциона
         """
         result = 0
-        if type(self.dealunit) is Option:
-            """
-            Особое отношение к опционам, потому что если ты продаешь и покупаешь опцион с одинаковым страйком,
-            датой и базовым активом - то они не списываются с баланса. А добавляются в короткие и длинные позиции 
-            одновременно. ИЛИ НЕТ!? Надо уточнить!
-            """
-            opt = self.dealunit
-            # Если опцион колл в деньгах
-            if opt.type == OPTION_TYPE_CALL and opt.strike <= ba:
-                result = ba - opt.strike + self.get_premy()
-            # Опцион колл вне денег
-            elif opt.type == OPTION_TYPE_CALL and opt.strike > ba:
-                result = self.get_premy()
-            # Опцион пут в деньгах
-            elif opt.type == OPTION_TYPE_PUT and opt.strike >= ba:
-                result = opt.strike - ba + self.get_premy()
-            # Опцион пут вне денег
-            else :
-                result = self.get_premy()
-        else:
-            pass
-
+        result += (self.dealunit.calculate() + self.get_premy())
         return result
 
