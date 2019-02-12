@@ -162,24 +162,3 @@ class BrockerDeal:
             result += (self.dealunit.calculate(ba) + self.get_premy())
         return result
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
