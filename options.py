@@ -1,5 +1,6 @@
-import re
+﻿import re
 from datetime import datetime
+from math import fabs
 
 OPTION_TYPE_CALL = 1
 OPTION_TYPE_PUT = 0
@@ -243,5 +244,23 @@ class Option:
 
     def calculate(self, ba):
         result = 0
-        # to be continue...
+        if self._inmoney(ba):
+            result = int(fabs(self.strike - ba))
         return result
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

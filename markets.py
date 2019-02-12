@@ -1,4 +1,4 @@
-"""
+﻿"""
 Main portfell class and additional functionality.
 
 TODO:
@@ -156,6 +156,30 @@ class BrockerDeal:
         :return: int прибыль или убыток в результате экспирации опциона
         """
         result = 0
-        result += (self.dealunit.calculate() + self.get_premy())
+        if self.dealtype ==  DEAL_POSITION_TYPE_SHORT:
+            result += (self.dealunit.calculate(ba)*(-1) + self.get_premy())
+        elif self.dealtype == DEAL_POSITION_TYPE_LONG:
+            result += (self.dealunit.calculate(ba) + self.get_premy())
         return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
