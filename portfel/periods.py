@@ -8,7 +8,3 @@ TODO:
 """
 
 
-class Period(type):
-    pass
-
-

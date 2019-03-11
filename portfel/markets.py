@@ -1,107 +1,36 @@
 ﻿"""
 Main portfell class and additional functionality.
 
-TODO:
-
-1)Add deals property to MarketBase class.
-It must have method add.
-2)Добавить функционал для рассчета баланса
-
 """
 
 from datetime import datetime
 
-from .options import Option, OPTION_TYPE_CALL, OPTION_TYPE_PUT
 
 DEAL_POSITION_TYPE_SHORT = 0
 DEAL_POSITION_TYPE_LONG = 1
 
 
-class MarketBase:
-    """
-    Это метакласс, а может и нет !!??
-    Использовать примерно так :
-    >>> class Market(MarketFORTS):
-    >>>     deals = [
-    >>>     {unit:[option class exemplary]; money:1000; deal_type:"SELL"; dt:"12.12.2018:19:45"; et=False},
-    >>>     [[option class exemplary], 1000, "SELL", "12.12.2018:19:45", False],
-    >>>     #here can be futures exemplary
-    >>>     ]
-    >>>
-    >>> market = Market()
-
-    @:param name: str название для портфеля на случай , если будем в БД сохранять
-    """
-    def __init__(self, name):
-        self.name = name
-
-
-class MarketFORTS(MarketBase):
-
-    def __init__(self, name):
-        self.limitations = LimitationsOnClientAccountsBase()
-        self.positions = PositionsOnClientAccountsBase()
-        return super(MarketFORTS, self).__init__(name)
-
-    def clearing(self):
-        for deal in self.deals:
-            pass
-
-    def expiration(self):
+class Strategy:
+    def __init__(self, deals, ba=[0, 1]):
         """
-        Эмулирует результаты экспирации. Т.е. обращает опционы в фьючерсы. Высчитывает ГО.
-        Вообщем полная эмуляция экспирации.
-        :return:
+        :deals list: list of instances BrokerDeal
+        :ba list: list of numbers returned usualy by function range(x, y, step)
         """
+        self._deals = deals
+        return super(Strategy, self).__init__()
+
+    @property
+    def values(self):
+        values = []
+        # TODO: here will be function for deals execution
+        class Temp:
+            def all(sub):
+                return self._deals
+        return Temp()
+
+    @values.setter
+    def values(self, *args, **kwargs):
         pass
-
-
-class MarketTradeReglaments:
-    """
-    Устанавливает порядок вычисления LimitationsOnClientAccounts и PositionsOnClientsAccounts по таймфрейму.
-    """
-    pass
-
-
-class LimitationsOnClientAccountsBase:
-    """
-    Класс отражающий таблицу QUIK - ограничения по клиентским счетам/
-    Отражает состояние счетов на текущую сессию между клирингами.
-
-    :param LimitOfOpenPositions : 	Лимит открытых позиций - денежные ср-ва трейдера на
-                                    срочном рынке (текущие лимиты открытых  позиций в денежном выражении);
-    :param CurrentNetPosition : 	Текущая чистая позиция - денежные ср-ва трейдера , зарезервированные под
-                                    гарантийное обеспечение по всем позициям трейдера на срочном рынке и на
-                                    отрицательную вариационную маржу(при ее наличии);
-    :param VariationMargin : 	Вариационная маржа - показывает значение вариационной маржи по всем позициям
-                                трейдера по текущей торговой сессии;
-    :param AccruedIncome : 	Накопленный доход - показывает значение денежных ср-в, которые трейдер заработал
-                            донаступления клиринга;
-    :param ExchangeFee : Биржевые сборы - отображает биржевые комиссионные сборы по всем сделкам клиента за
-                        текущую торговую сессию.
-    :return
-    """
-    pass
-
-
-class PositionsOnClientAccountsBase:
-    """
-    Класс отражающий таблицу QUIK - позиции по клиентским счетам.
-    Отражает состояние  клиентскиъ счетов после клиринга и соответственно экспирации.
-
-    :param  ShortName: Краткое название - краткий код торгового инструмента;
-    :param  IncomingLongPosition: Входящая длинная позиция - кол-во контрактов в длинных позициях по
-                                    торговому инструменту срочного рынка на начало торгов;
-    :param  IncomingShortPosition: Входящая короткая позиция - кол-во контрактов в коротких позициях
-                                    по торговому инструменту срочного рынка на начало торгов
-    :param  CurrentLongPosition: Текущая длинная позиция - количество текущих длинных позиций по торговому инструменту;
-    :param  CurrentShortPosition: Текущая короткая позиция - количество текущих коротких позиций по
-                                торговому инструменту;
-    :param  VariationMargin: Вариационная маржа - текущая вариационная маржа по каждому инструменту;
-
-    :return
-    """
-    pass
 
 
 class BrockerDeal:
@@ -149,10 +78,8 @@ class BrockerDeal:
 
     def execute_deal(self, ba):
         """
-        Это НЕ ОБЩИЙ МЕТОД ДЛЯ ВСЕХ РЫНКОВ! ЭТО КОНКРЕТНО ДЛЯ ФОРТСА!
-        Проводит операции над родительским объектом - MarketFORTS. Конкретно - изменяет показатели его
-        полей limitations и posittions.
-        :param ba:
+        Вычисляет прибыль/убыток по сделке.
+        :param ba: цена базового актива текущая (по рынку)
         :return: int прибыль или убыток в результате экспирации опциона
         """
         result = 0
