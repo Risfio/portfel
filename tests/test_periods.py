@@ -1,6 +1,24 @@
 import unittest
 from portfel.markets import Strategy, BrockerDeal
 from portfel.options import fromstring
+from portfel.periods import Period
+
+import numpy as np
+
+
+class TestNumpyForPeriods(unittest.TestCase):
+    values = [-1, -1, s-1,
+              -0.75, -0.5, -0.25,
+              0,
+              0.25, 0.50, 0.75,
+              1, 1, 1,
+              0.75, 0.5, 0.25,
+              0,
+              -0.25, -0.5, -0.75,
+              -1, -1, -1]
+    
+    def test_numpy(self):
+        pass
 
 
 class TestPeriodsMainFunc(unittest.TestCase):

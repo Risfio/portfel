@@ -8,3 +8,10 @@ TODO:
 """
 
 
+class PeriodsContainer:
+    def _get_trend(self, values):
+        pass
+
+class Period(tuple):
+    pass
+
