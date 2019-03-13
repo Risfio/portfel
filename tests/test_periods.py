@@ -1,7 +1,7 @@
 import unittest
 from portfel.markets import Strategy, BrockerDeal
 from portfel.options import fromstring
-from portfel.periods import Period
+from portfel.periods import PeriodsContainer
 
 import numpy as np
 
@@ -18,8 +18,13 @@ class TestNumpyForPeriods(unittest.TestCase):
               -1, -1, -1]
     
     def test_numpy(self):
-        pass
+        ndarr = np.array(self.values)
+        self.assertEqual(ndarr[1], -1.0)
+        self.assertEqual(ndarr[1], -1)
 
+    def test_periods_container(self):
+        pcont = PeriodsContainer(self.values)
+        periods = pcont._get_periods()
 
 class TestPeriodsMainFunc(unittest.TestCase):
     pass
