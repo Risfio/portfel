@@ -50,8 +50,6 @@ class PeriodsContainer:
                     trend = trend_func(self.value[n])
             period.append(n)
             periods.append(period)
-        # debug
-        print(periods)
         return periods
 
 
