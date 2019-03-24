@@ -25,14 +25,7 @@ class TestNumpyForPeriods(unittest.TestCase):
     def test_periods_container(self):
         pcont = PeriodsContainer(self.values)
         periods = pcont._get_periods()
-        result = []
-        for per in periods:
-            temp = []
-            for x in range(per[0], per[1]+1, 1):
-                temp.append(self.values[x])
-            result.append(temp)
-        # debug
-        print(result)
+        print(periods)
 
 class TestPeriodsMainFunc(unittest.TestCase):
     pass
