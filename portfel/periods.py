@@ -8,7 +8,6 @@ TODO:
 """
 
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
 
 
 PERIOD_TREND_LOWERING = lambda x, y: x > y and True or False
