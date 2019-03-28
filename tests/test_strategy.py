@@ -10,6 +10,7 @@ class TestBases(unittest.TestCase):
 
     def test_strategy_meta(self):
         class strategy(Strategy):
+            range = (62000, 72000)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 1000)
 
         # debug
