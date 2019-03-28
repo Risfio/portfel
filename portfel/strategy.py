@@ -6,9 +6,6 @@ Strategy classes
 class StrategyBase(type):
     def __new__(cls, name, bases, attrs):
 
-        # debug
-        print("*"*10, attrs.keys(), "*"*10)
-
         _deals = {}
 
         new_attrs = {}
@@ -26,8 +23,14 @@ class StrategyBase(type):
         for key, value in attrs.items():
             if not key.startswith('__'):
                 _deals.update({key: value})
-        attrs = {"deals": _deals}
-        return super().__new__(cls, name, bases, new_attrs)
+        new_attrs.update({"deals": _deals})
+
+        new_cls = super().__new__(cls, name, bases, new_attrs)
+
+        # debug
+        print(new_attrs)
+
+        return new_cls
 
 
 class Strategy(metaclass=StrategyBase):

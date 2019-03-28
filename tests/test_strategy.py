@@ -9,9 +9,13 @@ class TestBases(unittest.TestCase):
     str_PUT = "Si65000BO0"
 
     def test_strategy_meta(self):
-        class strategy(Strategy):
+        class strategy1(Strategy):
             range = (62000, 72000)
-            sell_call = BrockerDeal(fromstring(self.str_CALL), 1000)
+            buy_call = BrockerDeal(fromstring(self.str_CALL), 1000)
+
+        class strategy2(Strategy):
+            range = (62000, 72000)
+            sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
         # debug
         print("*"*10 ,"Test strategy start", "*"*10)
