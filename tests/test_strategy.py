@@ -24,8 +24,14 @@ class TestBases(unittest.TestCase):
         class strategy1(Strategy):
             range = (62000, 72000)
             buy_call = BrockerDeal(fromstring(self.str_CALL), 1000)
+            sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
-        print("#" *10, strategy1.values, "#" *10)
+        revenue = []
+        for ba in range(strategy1.range[0], strategy1.range[1], 250):
+            for name, deal in strategy1.values._deals.items():
+                revenue.append(deal.execute_deal(ba))
+
+        print("#" *10, revenue, "#" *10)
         self.assertIsInstance(strategy1.values, DealsSet)
 
 
