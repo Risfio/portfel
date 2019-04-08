@@ -15,6 +15,7 @@ class TestBases(unittest.TestCase):
     def test_strategy_meta(self):
         class strategy1(Strategy):
             range = (62000, 72000)
+            step = 250
             buy_call = BrockerDeal(fromstring(self.str_CALL), 1000)
 
         class strategy2(Strategy):
@@ -27,21 +28,22 @@ class TestBases(unittest.TestCase):
     def test_values(self):
         class strategy1(Strategy):
             range = (62000, 72000)
+            step = 250
             buy_call = BrockerDeal(fromstring(self.str_CALL), 500)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
-        revenue = []
-        ba_range = []
-        for ba in range(strategy1.range[0], strategy1.range[1], 250):
-            ba_range.append(ba)
-            rev = 0
-            for name, deal in strategy1.values._deals.items():
-                rev += deal.execute_deal(ba)
-            revenue.append(rev)
+        # revenue = []
+        # ba_range = []
+        # for ba in range(strategy1._meta.range[0], strategy1._meta.range[1], 250):
+        #     ba_range.append(ba)
+        #     rev = 0
+        #     for name, deal in strategy1.values._deals.items():
+        #         rev += deal.execute_deal(ba)
+        #     revenue.append(rev)
+        # df = DataFrame(data={'revenue': revenue, 'base active': ba_range})
 
-        df = DataFrame(data={'revenue': revenue, 'base active': ba_range})
-        print("#" *10, df, "#" *10)
-        self.assertIsInstance(strategy1.values, DealsSet)
+        print("#" *10, strategy1._meta.step, "#" *10)
+        # self.assertIsInstance(strategy1.values, DealsSet)
 
 
 if __name__ == "__main__":
