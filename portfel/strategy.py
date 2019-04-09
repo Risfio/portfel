@@ -3,7 +3,7 @@ Strategy classes
 """
 
 import numpy as np
-from pandas import DataFrame
+from pandas import Strategy
 
 
 class StrategyBase(type):
