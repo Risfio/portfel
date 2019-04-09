@@ -65,5 +65,5 @@ class DealsSet:
                 rev += deal.execute_deal(ba)
             revenue.append(rev)
 
-        return DataFrame(data={'revenue': revenue, 'base active': ba_range})
+        return Series(data=revenue, index=ba_range)
 
