@@ -42,7 +42,7 @@ class TestBases(unittest.TestCase):
         #     revenue.append(rev)
         # df = DataFrame(data={'revenue': revenue, 'base active': ba_range})
 
-        print("#" *10, strategy1._meta.step, "#" *10)
+        print("#" *10, strategy1.values.all()["revenue"], "#" *10)
         # self.assertIsInstance(strategy1.values, DealsSet)
 
 
