@@ -4,7 +4,6 @@ import pandas as pd
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from portfel.markets import MarketFORTS
 from portfel.options import fromstring, Option
 from portfel.markets import BrockerDeal, DEAL_POSITION_TYPE_SHORT, DEAL_POSITION_TYPE_LONG
 
