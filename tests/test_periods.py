@@ -1,5 +1,5 @@
 import unittest
-from portfel.markets import Strategy, BrockerDeal
+from portfel.markets import BrockerDeal
 from portfel.options import fromstring
 from portfel.periods import PeriodsContainer
 
@@ -45,10 +45,6 @@ class TestStrategyUsage(unittest.TestCase):
             BrockerDeal(opt1, 1000, 0)
         ]
         return deals
-
-    def test_strategy_init(self):
-        strat = Strategy(self._get_deals_list())
-        self.assertEqual(type(strat.values.all()), list)
 
 
 if __name__ == '__main__':

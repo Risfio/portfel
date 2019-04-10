@@ -10,29 +10,6 @@ DEAL_POSITION_TYPE_SHORT = 0
 DEAL_POSITION_TYPE_LONG = 1
 
 
-class Strategy:
-    def __init__(self, deals, ba=[0, 1]):
-        """
-        :deals list: list of instances BrokerDeal
-        :ba list: list of numbers returned usualy by function range(x, y, step)
-        """
-        self._deals = deals
-        return super(Strategy, self).__init__()
-
-    @property
-    def values(self):
-        values = []
-        # TODO: here will be function for deals execution
-        class Temp:
-            def all(sub):
-                return self._deals
-        return Temp()
-
-    @values.setter
-    def values(self, *args, **kwargs):
-        pass
-
-
 class BrockerDeal:
     """
     Возращает экземпляр BrockerDeal.
