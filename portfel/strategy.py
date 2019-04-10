@@ -3,7 +3,7 @@ Strategy classes
 """
 
 import numpy as np
-from pandas import Strategy
+from pandas import Series
 
 
 class StrategyBase(type):
