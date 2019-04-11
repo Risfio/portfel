@@ -12,6 +12,10 @@ Analize class have same usage:
 """
 
 
+import pandas as pd
+
+
 class Analize:
-    pass
+    def less_then(self, arg, msg):
+        return pd.DataFrame(data=[arg], index=[msg])
 
