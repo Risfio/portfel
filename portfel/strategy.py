@@ -3,7 +3,7 @@ Strategy classes
 """
 
 import numpy as np
-from pandas import Series
+from pandas import DataFrame
 
 
 class StrategyBase(type):
@@ -65,5 +65,5 @@ class DealsSet:
                 rev += deal.execute_deal(ba)
             revenue.append(rev)
 
-        return Series(data=revenue, index=ba_range)
+        return DataFrame(data={'revenues': revenue, "base_active": ba_range})
 

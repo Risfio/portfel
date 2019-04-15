@@ -15,22 +15,25 @@ class TestAnalize(unittest.TestCase):
                 return super(analize, self).less_then(arg, lbl, msg)
 
         an = analize()
-        print("*" * 10, "\r\n", an.less_then(0), "\r\n", "*" * 10)
+        # print this
+        an.less_then(0)
+        # or above
+        # print("*" * 10, "\r\n", an.less_then(0), "\r\n", "*" * 10)
 
     def test_strategy_analize(self):
         class strategy(Strategy):
             range = (62000, 72000)
             step = 250
-            buy_call = BrockerDeal(fromstring(self.str_CALL), 1000)
+            buy_call = BrockerDeal(fromstring("Si65000BC0"), 1000)
 
         class analize(Analize):
-            def less_then(self, arg, lbl="less then %VAL%", msg="Here description"):
-                revenues = self._items.values.all()
-                num_losses = len(for x in revenues['revenues'] if x < arg)
-                result = num_losses/revenues.size
-                return result
+            def less_then(self, arg, analized_item, lbl="less then %VAL%", msg="Here description"):
+                revenues = analized_item.values.all()
+                num_losses = len([x for x in revenues['revenues'] if x < arg])
+                result = num_losses/revenues['revenues'].size
+                return super(analize, self).less_then(result, analized_item, lbl, msg)
 
-        an = analize(strategy)
+        an = analize(data = [strategy])
         print("Result of strategy analize:\r\n", an.get(less_then = 0))
 
 
