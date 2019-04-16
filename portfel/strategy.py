@@ -5,6 +5,8 @@ Strategy classes
 import numpy as np
 from pandas import DataFrame
 
+from porfel.filters import Filter
+
 
 class StrategyBase(type):
     def __new__(cls, name, bases, attrs):
@@ -54,6 +56,8 @@ class DealsSet:
         self.ba_max = attrs.range[1]
         self.step = attrs.step
 
+    def filter(self, **kwargs):
+        pass
 
     def all(self):
         revenue = []
