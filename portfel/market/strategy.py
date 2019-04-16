@@ -5,7 +5,7 @@ Strategy classes
 import numpy as np
 from pandas import DataFrame
 
-from porfel.filters import Filter
+from .filters import Filter
 
 
 class StrategyBase(type):
@@ -38,7 +38,7 @@ class StrategyBase(type):
 
     @property
     def values(self):
-        return DealsSet(self.deals, attrs=self._meta)
+        return DealSet(self.deals, attrs=self._meta)
 
     @values.setter
     def values(self):
@@ -49,7 +49,7 @@ class Strategy(metaclass=StrategyBase):
     pass
 
 
-class DealsSet:
+class DealSet:
     def __init__(self, deals, attrs):
         self._deals = deals
         self.ba_min = attrs.range[0]

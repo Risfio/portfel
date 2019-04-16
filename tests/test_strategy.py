@@ -3,9 +3,9 @@ import unittest
 import numpy as np
 from pandas import DataFrame
 
-from portfel.strategy import Strategy, DealsSet
-from portfel.markets import BrockerDeal
-from portfel.options import fromstring
+from portfel.market import Strategy, DealSet
+from portfel.market import BrockerDeal
+from portfel.market import fromstring
 
 
 class TestBases(unittest.TestCase):
