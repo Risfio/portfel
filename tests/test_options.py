@@ -1,6 +1,6 @@
 import unittest
 
-from options import fromstring
+from portfel.market import fromstring
 
 class TestOptionClass(unittest.TestCase):
     option_string = 'Si66500BC0'

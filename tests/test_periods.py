@@ -1,7 +1,7 @@
 import unittest
-from portfel.markets import BrockerDeal
-from portfel.options import fromstring
-from portfel.periods import PeriodsContainer
+from portfel.market import BrockerDeal
+from portfel.market import fromstring
+from portfel.market import PeriodsContainer
 
 import numpy as np
 
