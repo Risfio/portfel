@@ -36,9 +36,25 @@ class StrategyBase(type):
 
         return new_cls
 
+    def _get_data_calculation_func(self):
+        def func():
+            revenue = []
+            ba_range = []
+            for ba in range(self._meta.range[0], self._meta.range[1], self._meta.step):
+                ba_range.append(ba)
+                rev = 0
+                for name, deal in self.deals.items():
+                    rev += deal.execute_deal(ba)
+                revenue.append(rev)
+
+            return DataFrame(data={'revenues': revenue, "base_active": ba_range})
+
+        return func
+
     @property
     def values(self):
-        return DealSet(self.deals, attrs=self._meta)
+        _data_calculation = self._get_data_calculation_func()
+        return DealSet(_data_calculation, attrs=self._meta)
 
     @values.setter
     def values(self):
@@ -51,23 +67,11 @@ class Strategy(metaclass=StrategyBase):
 
 class DealSet:
     def __init__(self, deals, attrs):
-        self._deals = deals
-        self.ba_min = attrs.range[0]
-        self.ba_max = attrs.range[1]
-        self.step = attrs.step
+        self._data = deals
 
     def filter(self, **kwargs):
         pass
 
     def all(self):
-        revenue = []
-        ba_range = []
-        for ba in range(self.ba_min, self.ba_max, self.step):
-            ba_range.append(ba)
-            rev = 0
-            for name, deal in self._deals.items():
-                rev += deal.execute_deal(ba)
-            revenue.append(rev)
-
-        return DataFrame(data={'revenues': revenue, "base_active": ba_range})
+        return self._data()
 
