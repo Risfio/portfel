@@ -37,6 +37,9 @@ class StrategyBase(type):
         return new_cls
 
     def _get_data_calculation_func(self):
+        """
+        Return calculations for all deals described in Strategy
+        """
         def func():
             revenue = []
             ba_range = []
