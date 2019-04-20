@@ -1,20 +1,23 @@
-
+import pandas as pd
 
 
 class Filter:
     def __init__(self, data, **kwargs):
-        # check filters param
         self._data = data
-        self.result = None
-        for name, arg in kwargs.items():
-            if name in self.__dict__.keys():
-                result = self.__dict__[name](arg)
 
-    def less_then(self, arg):
-        result = pd.DataFrame(data={"revenues":[], "base active":[]})
-        for x in range(0, self._data.size):
-            rev, ba = self._data[x]
-            if rev < 0:
-                result.update([rev, data])
-        return result
+    def _sort_data(self, ranges):
+        """
+        :ranges array: массив значений которые надо выбрать.
+                        Например, после фильтрации получаем значение ranges
+                        из которых формируем новый DataFrame
+        :return DataFrame: возвращает новый DataFrame
+        """
+        result = []
+        n = 0
+        for val in self._data.iterrows():
+            if n in ranges:
+                result.append(self._data.values[n])
+            n += 1
+        return pd.DataFrame(data=result, columns=self._data.columns)
+
 
