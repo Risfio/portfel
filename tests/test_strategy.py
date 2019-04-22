@@ -23,11 +23,21 @@ class TestBases(unittest.TestCase):
             sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
     def test_strategy_option_et_param(self):
-        class strategy(Strategy):
+        class strategy1(Strategy):
+            step = 250
+            range = (62000, 68000)
             buy_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=1, et=True)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=0, et=True)
 
-        self.assertEqual(strategy.values.all()['revenues'].values[20], 0)
+        self.assertEqual(strategy1.values.all()['revenues'].values[20], 0)
+
+        class strategy2(Strategy):
+            step = 250
+            range = (62000, 68000)
+            buy_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=1, et=True)
+            sell_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=0, et=False)
+
+        self.assertEqual(strategy2.values.all()['revenues'].values[20], 1800)
 
     def test_values(self):
         # test strategy values property with 2 and more deals
