@@ -31,7 +31,7 @@ class BrockerDeal:
     :param dt : date and time of transaction execution
     :param et : True or False - set if transaction was executed or not (et - transaction execution)
     """
-    def __init__(self, market_unit, money, deal_type=1, dt=datetime.now(), et=False):
+    def __init__(self, market_unit, money, deal_type=1, dt=datetime.now(), et=True):
         self.dealunit = market_unit
         self.money = money
 

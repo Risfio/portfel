@@ -29,7 +29,7 @@ class TestBases(unittest.TestCase):
             buy_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=1, et=True)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=0, et=True)
 
-        self.assertEqual(strategy1.values.all()['revenues'].values[20], 0)
+        self.assertEqual(strategy1.values.all().values[20], 0)
 
         class strategy2(Strategy):
             step = 250
@@ -37,7 +37,7 @@ class TestBases(unittest.TestCase):
             buy_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=1, et=True)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=0, et=False)
 
-        self.assertEqual(strategy2.values.all()['revenues'].values[20], 1800)
+        self.assertEqual(strategy2.values.all().values[20], 1800)
 
     def test_values(self):
         # test strategy values property with 2 and more deals
@@ -48,8 +48,8 @@ class TestBases(unittest.TestCase):
             sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
         self.assertIsInstance(strategy1.values, DealSet)
-        self.assertEqual(strategy1.values.all()['revenues'].values.size, 40)
-        self.assertIsInstance(strategy1.values._data, DataFrame)
+        self.assertEqual(strategy1.values.all().size, 40)
+        self.assertIsInstance(strategy1.values._source_data, DataFrame)
 
 
 if __name__ == "__main__":

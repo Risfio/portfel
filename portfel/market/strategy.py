@@ -3,7 +3,7 @@ Strategy classes
 """
 
 import numpy as np
-from pandas import DataFrame
+import pandas as pd
 
 from .filters import Filter
 
@@ -51,7 +51,7 @@ class StrategyBase(type):
                         rev += deal.execute_deal(ba)
                 revenue.append(rev)
 
-            return DataFrame(data={'revenues': revenue, "base_active": ba_range})
+            return pd.DataFrame(data={'revenues': revenue, "base active": ba_range})
 
         return func
 
@@ -71,11 +71,17 @@ class Strategy(metaclass=StrategyBase):
 
 class DealSet:
     def __init__(self, deals, attrs):
-        self._data = deals
+        """
+
+        :param deals: DataFrame with columns 'revenues' and 'base active'
+        :param attrs:
+        """
+        self._source_data = deals
 
     def filter(self, **kwargs):
         pass
 
     def all(self):
-        return self._data
+        # Return data like Series
+        return pd.Series(self._source_data['revenues'].values, index=self._source_data['base active'].values)
 
