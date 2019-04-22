@@ -47,7 +47,8 @@ class StrategyBase(type):
                 ba_range.append(ba)
                 rev = 0
                 for name, deal in self.deals.items():
-                    rev += deal.execute_deal(ba)
+                    if not deal.et is False:
+                        rev += deal.execute_deal(ba)
                 revenue.append(rev)
 
             return DataFrame(data={'revenues': revenue, "base_active": ba_range})
@@ -57,7 +58,7 @@ class StrategyBase(type):
     @property
     def values(self):
         _data_calculation = self._get_data_calculation_func()
-        return DealSet(_data_calculation, attrs=self._meta)
+        return DealSet(_data_calculation(), attrs=self._meta)
 
     @values.setter
     def values(self):
@@ -76,5 +77,5 @@ class DealSet:
         pass
 
     def all(self):
-        return self._data()
+        return self._data
 

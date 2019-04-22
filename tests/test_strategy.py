@@ -3,9 +3,9 @@ import unittest
 import numpy as np
 from pandas import DataFrame
 
-from portfel.market import Strategy, DealSet
-from portfel.market import BrockerDeal
-from portfel.market import fromstring
+from portfel.market.strategy import Strategy, DealSet
+from portfel.market.markets import BrockerDeal
+from portfel.market.options import fromstring
 
 
 class TestBases(unittest.TestCase):
@@ -22,18 +22,24 @@ class TestBases(unittest.TestCase):
             range = (62000, 72000)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
-        # debug
-        print("*"*10, "Test strategy start", "*"*10)
+    def test_strategy_option_et_param(self):
+        class strategy(Strategy):
+            buy_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=1, et=True)
+            sell_call = BrockerDeal(fromstring(self.str_CALL), 200, deal_type=0, et=True)
+
+        self.assertEqual(strategy.values.all()['revenues'].values[20], 0)
 
     def test_values(self):
+        # test strategy values property with 2 and more deals
         class strategy1(Strategy):
             range = (62000, 72000)
             step = 250
             buy_call = BrockerDeal(fromstring(self.str_CALL), 500)
             sell_call = BrockerDeal(fromstring(self.str_CALL), 1000, 0)
 
-        print("#" *10, strategy1.values.all(), "#" *10)
-        # self.assertIsInstance(strategy1.values, DealsSet)
+        self.assertIsInstance(strategy1.values, DealSet)
+        self.assertEqual(strategy1.values.all()['revenues'].values.size, 40)
+        self.assertIsInstance(strategy1.values._data, DataFrame)
 
 
 if __name__ == "__main__":
