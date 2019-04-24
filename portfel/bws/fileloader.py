@@ -32,8 +32,10 @@ class FileLoader:
             if os.path.isfile(path):
                 temp_pathes.append(path)
         # check for multiples instances with same name in different folders
-        if len(temp_pathes) > 0:
+        if len(temp_pathes) > 1:
             raise Exception("File with name {0} in multiple directories".format(file_name))
+        elif len(temp_pathes) == 0:
+            raise Exception("File with name {0} not found".format(file_name))
         return temp_pathes[0]
 
     def _construct_file_path(self, file_name, directory, ext=".csv"):
