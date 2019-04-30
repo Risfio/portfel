@@ -24,3 +24,13 @@ def load_emitent_data(cls, directory, ticker, ext=".txt"):
         raise IOError("File {0} not found".format(ticker))
     return data
 
+def read_file(cls, directory, file_name, ext=".txt"):
+    data = None
+    if os.path.isdir(directory):
+        if os.path.isfile(os.path.join(directory, "".join([file_name, ext]))):
+                data = pd.read_csv(os.path.join(directory, "".join([file_name, ext])), sep=",", encoding="cp1251")
+    else:
+        raise Exception("Directory {0} not found!".format(direcotry))
+    return data
+
+
