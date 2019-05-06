@@ -1,9 +1,8 @@
 import unittest
 import os
+import pandas as pd
 
-
-from portfel.bws import load_emitent_data
-from portfel.bws import read_file
+from portfel.bws import FileLoaderQUIK
 
 
 def print_info(msg):
@@ -17,13 +16,14 @@ class TestBWS(unittest.TestCase):
         :return:
         """
         dir_path = os.path.join(os.path.expanduser('~'), "documents", "projects", "BWS", "tests", "TEMP")
-        data = load_emitent_data(cls=None, directory=dir_path, ticker="ALRS")
 
     def test_read_data(self):
         directory = os.path.join(os.path.expanduser('~'), "documents", "projects", "BWS", "tests", "TEMP")
-        data = read_file(cls=None, directory=directory, file_name="emitents_29042019")
 
-        print_info(data.values[0])
+        quik = FileLoaderQUIK()
+        quik.directory = directory
+        data = quik.read_data("emitents")
+        print_info(data['Дата торгов'])
 
 
 if __name__ == '__main__':
