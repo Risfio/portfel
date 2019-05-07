@@ -23,7 +23,7 @@ class TestBWS(unittest.TestCase):
         quik = FileLoaderQUIK()
         quik.directory = directory
         data = quik.read_data("emitents")
-        print_info(data['Дата торгов'])
+        print_info(data['Наименование'])
 
 
 if __name__ == '__main__':
