@@ -39,6 +39,28 @@ class TestBWS(unittest.TestCase):
         # Test columns names espetional for QUIK file loader
         self.assertEqual(columns, tuple(data.columns.tolist()))
 
+    def test_change_names(self):
+        import re
+        pat = re.compile('\[+.+\]')
+        directory = os.path.join(os.path.expanduser('~'), "documents", "projects", "BWS", "tests", "TEMP")
+        file_name = "emitents_08052019"
+        quik = FileLoaderQUIK(directory=directory, file_name=file_name)
+        data  = quik.read_data()
+        s = data['Name'][0]
+
+        def func(word):
+            pat = re.compile('\[+.+\]')
+            name = pat.split(word)[0].strip()
+            if word.count(name) == 0:
+                raise Exception("Troubles construct correct name from string {0}!".format(word))
+            return name
+
+        self.assertEqual(u'Сбербанк', func(s))
+        self.assertEqual(len(func(s)), 8)
+
+        data['Name'] = data['Name'].map(func)
+        print_info(data.values[0])
+
 
 if __name__ == '__main__':
     unittest.all()
