@@ -11,6 +11,11 @@ class CalendarDayValidationError(Exception):
 
 
 class Calendar:
+
+	def _get_date_fromstring(self, s):
+		day, month, year = [int(x) for x in s.split(".")]
+		return date(day=day, month=month, year=year)
+
 	def _get_week_dates_bystr(self, s):
 		_dates = []
 		day, month, year = [int(x) for x in s.split(".")]
@@ -45,6 +50,12 @@ class Calendar:
 		elif type(dt) is str:
 			_dates = self._get_week_dates_bystr(dt)
 		return _dates
+
+	def get_previous_week_dates(self, dt):
+		current_week_dates = self.get_week_dates(dt)
+		monday = min(current_week_dates)
+		previous_friday = self._get_date_fromstring(monday)-timedelta(days=3)
+		return self._get_week_dates_bystr(previous_friday.strftime("%d.%m.%Y"))
 
 
 class BWSBase:
