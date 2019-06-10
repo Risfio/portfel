@@ -1,6 +1,7 @@
 """
 """
 
+import pandas as pd
 
 from datetime import date
 from datetime import timedelta
@@ -97,7 +98,7 @@ class BWSBase:
 	def _get_emitents_progression(self, data, week_previous=None, week_current=0):
 		pass
 
-	def get_groups(self, groups=3, maxnum=10):
+	def get_groups(self, groups=3, maxnum=10, current_date=date.today().strftime("%d.%m.%Y")):
 		"""
 		Call stack:
 		load data from main database
@@ -106,5 +107,6 @@ class BWSBase:
 
 		"""
 		data = self._load_data()
-		sorted_data = self._get_emitents_progression((data))
+		emitents_list = date['ISIN'].unique()
+		
 

@@ -31,8 +31,20 @@ class TestBWS(unittest.TestCase):
         self.assertEqual(len(func(s)), 8)
 
         data['Name'] = data['Name'].map(func)
-        # debug
-        print_info(data['Name'][0])
+
+    def test_select_emitent_data(self):
+        dt1 = "29.05.2019"
+        dt2 = "30.05.2019"
+        data = pd.read_csv(os.path.join(TEST_DIR, "bws.txt"))
+        test_isin = "RU0009029540"
+        
+        day_data = pd.DataFrame(data=data.values, index=data.Date, columns=data.columns)
+        day_data = day_data.loc[dt1]
+
+        emitents_data = pd.DataFrame(data=day_data.values, index=day_data.Code, columns=data.columns)
+        emitent = emitents_data.loc["SBER"]
+        el = float(".".join(emitent.Min.split(',')))
+        print_info(el)
 
 
 if __name__ == '__main__':
