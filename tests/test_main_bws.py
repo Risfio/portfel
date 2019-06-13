@@ -5,6 +5,10 @@ import pandas as pd
 sys.path.append(os.getcwd())
 import portfelcfg
 
+from portfel.bws.base import BWSBase
+from portfel.bws.base import Calendar
+
+
 TEST_DIR = os.path.join(portfelcfg.BASE_DIR, "tests", "TEMP")
 os.path.isdir(TEST_DIR)
 
@@ -17,7 +21,7 @@ class TestBWS(unittest.TestCase):
     def test_change_names(self):
         import re
         pat = re.compile('\[+.+\]')
-        data  = pd.read_csv(os.path.join(TEST_DIR, "bws.txt"))
+        data = pd.read_csv(os.path.join(TEST_DIR, "bws.txt"))
         s = data['Name'][0]
 
         def func(word):
@@ -45,6 +49,17 @@ class TestBWS(unittest.TestCase):
         emitent = emitents_data.loc["SBER"]
         el = float(".".join(emitent.Min.split(',')))
         print_info(el)
+
+    def test_week_data(self):
+        date = "29.05.2019"
+        class BWS(BWSBase):
+            db = os.path.join(TEST_DIR, "bws.txt")
+
+        bws = BWS()
+        calendar = Calendar()
+
+        data = bws.week_data(calendar.get_week_dates(date))
+        print_info(data.index.unique())
 
 
 if __name__ == '__main__':

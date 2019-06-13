@@ -98,6 +98,22 @@ class BWSBase:
 	def _get_emitents_progression(self, data, week_previous=None, week_current=0):
 		pass
 
+	def week_data(self, dates_list):
+		"""
+		Return data for ALL emitents for specified dates.
+		:param dates_list: list with dates string in format "%d%m%Y"
+		:return:
+		"""
+		result = None
+
+		# TODO: fix string below to self._load_data()
+		df = pd.read_csv(self.db)
+		# Make Date values as index
+		df_reindexed = pd.DataFrame(data=df.values, index=df.Date, columns=df.columns)
+		# Get data for specified dates
+		result = df_reindexed.loc[dates_list]
+		return result
+
 	def get_groups(self, groups=3, maxnum=10, current_date=date.today().strftime("%d.%m.%Y")):
 		"""
 		Call stack:
@@ -106,7 +122,13 @@ class BWSBase:
 
 
 		"""
-		data = self._load_data()
-		emitents_list = date['ISIN'].unique()
-		
 
+		# Create dates lists
+		calendar = Calendar()
+		current_week_dates_list = calendar.get_week_dates(current_date)
+		previous_week_dates_list = calendar.get_previous_week_dates(current_date)
+
+		current_week_data = self.week_data(current_week_dates_list)
+
+
+		
