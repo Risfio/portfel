@@ -59,7 +59,7 @@ class TestBWS(unittest.TestCase):
         calendar = Calendar()
 
         data = bws.week_data(calendar.get_week_dates(date))
-        print_info(data.index.unique())
+        print_info(data.loc["SBER"])
 
 
 if __name__ == '__main__':
