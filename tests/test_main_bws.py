@@ -57,9 +57,13 @@ class TestBWS(unittest.TestCase):
 
         bws = BWS()
         calendar = Calendar()
-
         data = bws.week_data(calendar.get_week_dates(date))
-        print_info(data.loc["SBER"])
+
+        # temp example code
+        temp = data.loc["SBER", "Min"]
+        f = lambda x: float(".".join(x.split(",")))
+        temp_x = temp.apply(f)
+        print_info(temp_x.min())
 
 
 if __name__ == '__main__':
