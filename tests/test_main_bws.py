@@ -60,10 +60,13 @@ class TestBWS(unittest.TestCase):
         data = bws.week_data(calendar.get_week_dates(date))
 
         # temp example code
+        """
         temp = data.loc["SBER", "Min"]
         f = lambda x: float(".".join(x.split(",")))
         temp_x = temp.apply(f)
         print_info(temp_x.min())
+        """
+        print_info(data.loc[:, ["Code"]].Code.unique())
 
 
 if __name__ == '__main__':

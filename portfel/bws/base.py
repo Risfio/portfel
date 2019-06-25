@@ -114,11 +114,7 @@ class BWSBase:
 		emitents_list = df.Code.unique()
 
 		week_data = df_reindexed.loc[dates_list]
-		# From DataFrame below u can select data by DataFrame.loc["#emitentname"]
-		emitents_weekly_data = pd.DataFrame(data=week_data.values, index=week_data.Code, columns=week_data.columns)
-
-		result = emitents_weekly_data
-		return result
+		return week_data
 
 	def get_groups(self, groups=3, maxnum=10, current_date=date.today().strftime("%d.%m.%Y")):
 		"""
